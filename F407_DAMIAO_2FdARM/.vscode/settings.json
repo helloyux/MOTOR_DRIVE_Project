@@ -1,0 +1,19 @@
+{
+  "stm32cube-ide-clangd.enable": true,
+  "stm32cube-ide-clangd.enableLinting": true,
+  "editor.renderValidationDecorations": "on",
+  "cmake.cmakePath": "cube-cmake",
+  "cmake.preferredGenerators": [
+    "Ninja"
+  ],
+  "stm32cube-ide-clangd.path": "cube",
+  "stm32cube-ide-clangd.arguments": [
+    "starm-clangd",
+    "--query-driver=${env:LOCALAPPDATA}/stm32cube/bundles/gnu-tools-for-stm32/13.3.1+st.9/bin/arm-none-eabi-gcc*",
+    "--query-driver=${env:LOCALAPPDATA}/stm32cube/bundles/gnu-tools-for-stm32/13.3.1+st.9/bin/arm-none-eabi-g++*"
+  ],
+  "cmake.useCMakePresets": "always",
+  "cmake.configureArgs": [
+    "-DCMAKE_COMMAND=cube-cmake"
+  ]
+}

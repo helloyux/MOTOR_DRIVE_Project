@@ -1,0 +1,90 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "CMake: 配置",
+      "type": "process",
+      "command": "${env:LOCALAPPDATA}/stm32cube/bundles/cmake/4.0.1+st.3/bin/cmake.exe",
+      "args": ["--preset", "Debug"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Build (ninja Debug)",
+      "type": "process",
+      "command": "${env:LOCALAPPDATA}/stm32cube/bundles/cmake/4.0.1+st.3/bin/cmake.exe",
+      "args": ["--build", "--preset", "Debug", "--parallel"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "dependsOn": [
+        "CMake: 配置"
+      ],
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "编译 + 烧录 (不调试)",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "Build (ninja Debug)",
+        "OpenOCD: 烧录 build/Debug-ANGLE"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "OpenOCD: 烧录 build/Debug-ANGLE",
+      "type": "process",
+      "command": "D:/environment/openocd-v0.12.0-i686-w64-mingw32/bin/openocd.exe",
+      "args": [
+        "-s",
+        "D:/environment/openocd-v0.12.0-i686-w64-mingw32/share/openocd/scripts",
+        "-f",
+        "${workspaceFolder}/.vscode/openocd.cfg",
+        "-c",
+        "program {${workspaceFolder}/build/Debug-ANGLE/F407_DAMIAO_TEST_ANGLE.elf} verify reset exit"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "OpenOCD: 整片擦除 (512KB)",
+      "type": "process",
+      "command": "D:/environment/openocd-v0.12.0-i686-w64-mingw32/bin/openocd.exe",
+      "args": [
+        "-s",
+        "D:/environment/openocd-v0.12.0-i686-w64-mingw32/share/openocd/scripts",
+        "-f",
+        "${workspaceFolder}/.vscode/openocd.cfg",
+        "-c",
+        "init; reset halt; flash erase_sector 0 0 7; shutdown"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "OpenOCD: 复位并运行",
+      "type": "process",
+      "command": "D:/environment/openocd-v0.12.0-i686-w64-mingw32/bin/openocd.exe",
+      "args": [
+        "-s",
+        "D:/environment/openocd-v0.12.0-i686-w64-mingw32/share/openocd/scripts",
+        "-f",
+        "${workspaceFolder}/.vscode/openocd.cfg",
+        "-c",
+        "init; reset run; shutdown"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

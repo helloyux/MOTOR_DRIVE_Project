@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "cwd": "${workspaceFolder}",
+      "executable": "${workspaceFolder}/build/Debug-ANGLE/F407_DAMIAO_TEST_ANGLE.elf",
+      "name": "Debug with OpenOCD (CMSIS-DAP)",
+      "request": "launch",
+      "type": "cortex-debug",
+      "preLaunchTask": "Build (ninja Debug)",
+      "servertype": "openocd",
+      "configFiles": [
+        "${workspaceFolder}/.vscode/openocd.cfg"
+      ],
+      "serverpath": "D:/environment/openocd-v0.12.0-i686-w64-mingw32/bin/openocd.exe",
+      "searchDir": [
+        "D:/environment/openocd-v0.12.0-i686-w64-mingw32/share/openocd/scripts"
+      ],
+      "runToEntryPoint": "main",
+      "showDevDebugOutput": "none",
+      "gdbPath": "${env:LOCALAPPDATA}/stm32cube/bundles/gnu-gdb-for-stm32/14.3.1+st.2/bin/arm-none-eabi-gdb.exe",
+      "armToolchainPath": "${env:LOCALAPPDATA}/stm32cube/bundles/gnu-tools-for-stm32/13.3.1+st.9/bin"
+    }
+  ]
+}
